@@ -1,0 +1,10 @@
+setwd("C:/Users/Public/Documents/R")
+df <- read.table("./data/household_power_consumption.txt",sep=";",dec=".",header=TRUE,stringsAsFactors=FALSE,na.strings="?",colClasses=c(rep("character",2), rep("numeric",7)))
+df2<-df[df$Date=="1/2/2007" | df$Date=="2/2/2007" ,]
+df2$DateTime<-strptime(paste(df2$Date,df2$Time),"%d/%m/%Y %H:%M:%S")
+with(df2,plot(DateTime,Sub_metering_1,type="l",bg="white",xlab="",ylab="Energy sub metering"))
+with(df2, lines(DateTime,Sub_metering_2,col="red"))
+with(df2, lines(DateTime,Sub_metering_3,col="blue"))
+legend(x="topright",legend= c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("black","red","blue"), lwd=1, lty=c(1,1,1)) 
+dev.copy(png, file = "plot3.png")
+dev.off()
